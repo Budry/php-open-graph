@@ -1,0 +1,21 @@
+{
+  "name": "budry/php-open-graph",
+  "type": "libray",
+  "description": "Simple object based Open Graph generator",
+  "keywords": [],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ondřej Záruba",
+      "email": "info@zaruba-ondrej.dev"
+    }
+  ],
+  "require": {
+    "php": "^7.0|^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Budry\\OpenGraph\\": "src/"
+    }
+  }
+}
