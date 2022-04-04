@@ -148,8 +148,8 @@ class Image implements ObjectInterface
             new MetaItem("og:image", $this->getUrl()),
             new MetaItem("og:image:secure_url", $this->getSecureUrl()),
             new MetaItem("og:image:type", $this->getType()),
-            new MetaItem("og:image:width", (string)$this->getWidth()),
-            new MetaItem("og:image:height", (string)$this->getHeight()),
+            new MetaItem("og:image:width", $this->getWidth() ? (string)$this->getWidth() : null),
+            new MetaItem("og:image:height", $this->getHeight() ? (string)$this->getHeight() : null),
             new MetaItem("og:image:alt", $this->getAlt())
         ]);
     }
