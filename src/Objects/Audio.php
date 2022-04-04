@@ -4,6 +4,7 @@ namespace Budry\OpenGraph\Objects;
 
 use Budry\OpenGraph\MetaItem;
 use Budry\OpenGraph\ObjectInterface;
+use Budry\OpenGraph\Utils\FieldsFilter;
 use Respect\Validation\Validator;
 
 class Audio implements ObjectInterface
@@ -75,12 +76,15 @@ class Audio implements ObjectInterface
         return $this;
     }
 
+    /**
+     * @return array|MetaItem[]
+     */
     public function getFields(): array
     {
-        return [
+        return FieldsFilter::getFilteredItems([
             new MetaItem("og:audio", $this->getUrl()),
             new MetaItem("og:audio:secure_url", $this->getSecureUrl()),
             new MetaItem("og:audio:type", $this->getType()),
-        ];
+        ]);
     }
 }

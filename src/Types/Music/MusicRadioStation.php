@@ -4,6 +4,7 @@ namespace Budry\OpenGraph\Types\Music;
 
 use Budry\OpenGraph\MetaItem;
 use Budry\OpenGraph\TypeInterface;
+use Budry\OpenGraph\Utils\FieldsFilter;
 use Respect\Validation\Validator;
 
 class MusicRadioStation implements TypeInterface
@@ -46,6 +47,6 @@ class MusicRadioStation implements TypeInterface
             new MetaItem("music:creator", $this->getCreator()),
         ];
 
-        return $fields;
+        return FieldsFilter::getFilteredItems($fields);
     }
 }

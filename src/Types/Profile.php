@@ -4,6 +4,7 @@ namespace Budry\OpenGraph\Types;
 
 use Budry\OpenGraph\MetaItem;
 use Budry\OpenGraph\TypeInterface;
+use Budry\OpenGraph\Utils\FieldsFilter;
 use Budry\OpenGraph\Utils\Gender;
 
 class Profile implements TypeInterface
@@ -108,11 +109,11 @@ class Profile implements TypeInterface
      */
     public function getFields(): array
     {
-        return [
+        return FieldsFilter::getFilteredItems([
             new MetaItem("profile:first_name", $this->getFirstName()),
             new MetaItem("profile:last_name", $this->getLastName()),
             new MetaItem("profile:username", $this->getUsername()),
             new MetaItem("profile:gender", $this->getGender())
-        ];
+        ]);
     }
 }
