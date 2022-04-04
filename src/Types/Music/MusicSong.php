@@ -12,7 +12,7 @@ class MusicSong implements TypeInterface
     /** @var int|null */
     private $duration;
 
-    /** @var array */
+    /** @var array<array{album: string, disc: int|null, track: int|null}> */
     private $albums = [];
 
     /** @var string[] */
@@ -37,7 +37,7 @@ class MusicSong implements TypeInterface
     }
 
     /**
-     * @return array
+     * @return array<array{album: string, disc: int|null, track: int|null}>
      */
     public function getAlbums(): array
     {
@@ -99,18 +99,21 @@ class MusicSong implements TypeInterface
         return "music.song";
     }
 
+    /**
+     * @return array|MetaItem[]
+     */
     public function getFields(): array
     {
         $fields = [
-            new MetaItem("music:duration", $this->getDuration()),
+            new MetaItem("music:duration", $this->getDuration() ? (string)$this->getDuration() : null),
         ];
         foreach ($this->getMusicians() as $musician) {
             $fields[] = new MetaItem("music:musician", $musician);
         }
         foreach ($this->getAlbums() as $album) {
             $fields[] = new MetaItem("music:album", $album['album']);
-            $fields[] = new MetaItem("music:album:disc", $album['disc']);
-            $fields[] = new MetaItem("music:album:track", $album['track']);
+            $fields[] = new MetaItem("music:album:disc", $album['disc'] !== null ? (string)$album['disc'] : null);
+            $fields[] = new MetaItem("music:album:track", $album['track'] !== null ? (string)$album['track'] : null);
         }
 
         return FieldsFilter::getFilteredItems($fields);

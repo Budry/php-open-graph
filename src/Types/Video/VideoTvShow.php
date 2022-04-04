@@ -10,7 +10,7 @@ use Respect\Validation\Validator;
 
 class VideoTvShow implements TypeInterface
 {
-    /** @var array */
+    /** @var array<array{profile: string, role: string|null}> */
     private $actors = [];
 
     /** @var string[] */
@@ -29,7 +29,7 @@ class VideoTvShow implements TypeInterface
     private $tags = [];
 
     /**
-     * @return array
+     * @return array<array{profile: string, role: string|null}>
      */
     public function getActors(): array
     {
@@ -166,8 +166,8 @@ class VideoTvShow implements TypeInterface
     public function getFields(): array
     {
         $fields = [
-            new MetaItem("video:duration", $this->getDuration()),
-            new MetaItem("video:release_date", $this->getReleaseDate()->format(OpenGraph::DATE_TIME_FORMAT)),
+            new MetaItem("video:duration", $this->getDuration() !== null ? (string)$this->getDuration() : null),
+            new MetaItem("video:release_date", $this->getReleaseDate() ? $this->getReleaseDate()->format(OpenGraph::DATE_TIME_FORMAT): null),
         ];
         foreach ($this->getTags() as $tag) {
             $fields[] = new MetaItem("video:tag", $tag);

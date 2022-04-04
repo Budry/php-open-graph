@@ -10,7 +10,7 @@ use Respect\Validation\Validator;
 
 class VideoEpisode implements TypeInterface
 {
-    /** @var array */
+    /** @var array<array{profile: string, role: string|null}> */
     private $actors = [];
 
     /** @var string[] */
@@ -32,7 +32,7 @@ class VideoEpisode implements TypeInterface
     private $series;
 
     /**
-     * @return array
+     * @return array<array{profile: string, role: string|null}>
      */
     public function getActors(): array
     {
@@ -167,9 +167,9 @@ class VideoEpisode implements TypeInterface
      * @param string|null $series
      * @return $this
      */
-    public function setSeries(string $series): self
+    public function setSeries(?string $series): self
     {
-        if (!Validator::url()->validate($series)) {
+        if ($series && !Validator::url()->validate($series)) {
             throw new \InvalidArgumentException("URL is not in valid format");
         }
         $this->series = $series;
@@ -190,8 +190,9 @@ class VideoEpisode implements TypeInterface
     public function getFields(): array
     {
         $fields = [
-            new MetaItem("video:duration", $this->getDuration()),
-            new MetaItem("video:release_date", $this->getReleaseDate()->format(OpenGraph::DATE_TIME_FORMAT)),
+            new MetaItem("video:duration", $this->getDuration() ? (string)$this->getDuration() : null),
+            new MetaItem("video:release_date", $this->getReleaseDate() ? $this->getReleaseDate()->format(OpenGraph::DATE_TIME_FORMAT) : null),
+            new MetaItem("video:series", $this->getSeries()),
         ];
         foreach ($this->getTags() as $tag) {
             $fields[] = new MetaItem("video:tag", $tag);
@@ -205,9 +206,6 @@ class VideoEpisode implements TypeInterface
         foreach ($this->getActors() as $actor) {
             $fields[] = new MetaItem("video:actor", $actor["profile"]);
             $fields[] = new MetaItem("video:actor:role", $actor["role"]);
-        }
-        foreach ($this->getSeries() as $series) {
-            $fields[] = new MetaItem("video:series", $series);
         }
 
         return FieldsFilter::getFilteredItems($fields);

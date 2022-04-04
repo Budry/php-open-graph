@@ -122,7 +122,7 @@ class OpenGraph implements ObjectInterface
      */
     public function addAudio(Audio $video): self
     {
-        $this->videos[] = $video;
+        $this->audios[] = $video;
 
         return $this;
     }
@@ -133,13 +133,13 @@ class OpenGraph implements ObjectInterface
      */
     public function addImage(Image $video): self
     {
-        $this->videos[] = $video;
+        $this->images[] = $video;
 
         return $this;
     }
 
     /**
-     * @return array
+     * @return array|MetaItem[]
      */
     public function getFields(): array
     {

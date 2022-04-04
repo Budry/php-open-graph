@@ -10,7 +10,7 @@ use Respect\Validation\Validator;
 
 class MusicAlbum implements TypeInterface
 {
-    /** @var array */
+    /** @var array<array{song: string, disc: int|null, track: int|null}> */
     private $songs = [];
 
     /** @var string|null */
@@ -20,7 +20,7 @@ class MusicAlbum implements TypeInterface
     public $releasedDate;
 
     /**
-     * @return array
+     * @return array<array{song: string, disc: int|null, track: int|null}>
      */
     public function getSongs(): array
     {
@@ -103,13 +103,13 @@ class MusicAlbum implements TypeInterface
     public function getFields(): array
     {
         $fields = [
-            new MetaItem("music:release_date", $this->getReleasedDate()->format(OpenGraph::DATE_TIME_FORMAT)),
+            new MetaItem("music:release_date", $this->getReleasedDate() ? $this->getReleasedDate()->format(OpenGraph::DATE_TIME_FORMAT) : null),
             new MetaItem("music:musician", $this->getMusician()),
         ];
         foreach ($this->getSongs() as $song) {
             $fields[] = new MetaItem("music:song", $song['song']);
-            $fields[] = new MetaItem("music:song:disc", $song['disc']);
-            $fields[] = new MetaItem("music:song:track", $song['track']);
+            $fields[] = new MetaItem("music:song:disc", $song['disc'] !== null ? (string)$song["disc"] : null);
+            $fields[] = new MetaItem("music:song:track", $song['track'] !== null ? (string)$song["track"] : null);
 
         }
 

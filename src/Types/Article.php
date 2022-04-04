@@ -154,9 +154,9 @@ class Article implements TypeInterface
     public function getFields(): array
     {
         $fields = [
-            new MetaItem("article:published_time", $this->getPublishedDate()->format(OpenGraph::DATE_TIME_FORMAT)),
-            new MetaItem("article:modified_time", $this->getModifiedDate()->format(OpenGraph::DATE_TIME_FORMAT)),
-            new MetaItem("article:expiration_time", $this->getExpirationDate()->format(OpenGraph::DATE_TIME_FORMAT)),
+            new MetaItem("article:published_time", $this->getPublishedDate() ? $this->getPublishedDate()->format(OpenGraph::DATE_TIME_FORMAT) : null),
+            new MetaItem("article:modified_time", $this->getModifiedDate() ? $this->getModifiedDate()->format(OpenGraph::DATE_TIME_FORMAT) : null),
+            new MetaItem("article:expiration_time", $this->getExpirationDate() ? $this->getExpirationDate()->format(OpenGraph::DATE_TIME_FORMAT) : null),
             new MetaItem("article:section", $this->getSection()),
         ];
         foreach ($this->getTags() as $tag) {

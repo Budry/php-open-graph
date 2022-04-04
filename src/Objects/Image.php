@@ -4,6 +4,7 @@ namespace Budry\OpenGraph\Objects;
 
 use Budry\OpenGraph\MetaItem;
 use Budry\OpenGraph\ObjectInterface;
+use Budry\OpenGraph\Utils\FieldsFilter;
 use Respect\Validation\Validator;
 
 class Image implements ObjectInterface
@@ -139,17 +140,17 @@ class Image implements ObjectInterface
     }
 
     /**
-     * @return array
+     * @return array|MetaItem[]
      */
     public function getFields(): array
     {
-        return [
+        return FieldsFilter::getFilteredItems([
             new MetaItem("og:image", $this->getUrl()),
             new MetaItem("og:image:secure_url", $this->getSecureUrl()),
             new MetaItem("og:image:type", $this->getType()),
-            new MetaItem("og:image:width", $this->getWidth()),
-            new MetaItem("og:image:height", $this->getHeight()),
+            new MetaItem("og:image:width", (string)$this->getWidth()),
+            new MetaItem("og:image:height", (string)$this->getHeight()),
             new MetaItem("og:image:alt", $this->getAlt())
-        ];
+        ]);
     }
 }

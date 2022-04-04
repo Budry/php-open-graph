@@ -70,7 +70,7 @@ class Book implements TypeInterface
     public function setIsbn(?string $isbn): self
     {
         $isbnValidator = new Isbn();
-        if (!$isbnValidator->validation->isbn($isbn)) {
+        if ($isbn && !$isbnValidator->validation->isbn($isbn)) {
             throw new \InvalidArgumentException("Invalid ISBN format");
         }
 
@@ -119,7 +119,7 @@ class Book implements TypeInterface
     {
         $fields = [
             new MetaItem("book:isbn", $this->getIsbn()),
-            new MetaItem("book:release_date", $this->getReleaseDate()->format(OpenGraph::DATE_TIME_FORMAT)),
+            new MetaItem("book:release_date", $this->getReleaseDate() ? $this->getReleaseDate()->format(OpenGraph::DATE_TIME_FORMAT) : null),
         ];
         foreach ($this->getTags() as $tag) {
             $fields[] = new MetaItem("book:tag", $tag);

@@ -7,14 +7,14 @@ class MetaItem
     /** @var string */
     private $name;
 
-    /** @var string */
+    /** @var string|null */
     private $content;
 
     /**
      * @param string $name
-     * @param string $content
+     * @param string|null $content
      */
-    public function __construct(string $name, string $content)
+    public function __construct(string $name, ?string $content)
     {
         $this->name = $name;
         $this->content = $content;
@@ -29,9 +29,9 @@ class MetaItem
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }

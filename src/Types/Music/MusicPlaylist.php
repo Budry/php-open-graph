@@ -9,7 +9,7 @@ use Respect\Validation\Validator;
 
 class MusicPlaylist implements TypeInterface
 {
-    /** @var array */
+    /** @var array<array{song: string, track: int|null, disc: int|null}> */
     private $songs = [];
 
     /** @var string|null */
@@ -37,7 +37,7 @@ class MusicPlaylist implements TypeInterface
     }
 
     /**
-     * @return array
+     * @return array<array{song: string, track: int|null, disc: int|null}>
      */
     public function getSongs(): array
     {
@@ -88,9 +88,8 @@ class MusicPlaylist implements TypeInterface
         ];
         foreach ($this->getSongs() as $song) {
             $fields[] = new MetaItem("music:song", $song['song']);
-            $fields[] = new MetaItem("music:song:disc", $song['disc']);
-            $fields[] = new MetaItem("music:song:track", $song['track']);
-
+            $fields[] = new MetaItem("music:song:disc", $song['disc'] !== null ? (string)$song['disc'] : null);
+            $fields[] = new MetaItem("music:song:track", $song['track'] !== null ? (string)$song['track'] : null);
         }
 
         return FieldsFilter::getFilteredItems($fields);
