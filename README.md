@@ -4,7 +4,7 @@ Simple object generator for open graph protocol. Full implementation of [this sp
 
 ## Installation
 
-The best way to install `Budry\OpenGraph` is using [Composer](https://getcomposer.org/)
+The best way to install `budry/php-open-grap` is using [Composer](https://getcomposer.org/)
 
 ```shell
 $ composer require budry/php-open-grap
