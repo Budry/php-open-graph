@@ -6,6 +6,7 @@ use Budry\OpenGraph\Objects\Audio;
 use Budry\OpenGraph\Objects\Image;
 use Budry\OpenGraph\Objects\Video;
 use Budry\OpenGraph\Types\Website;
+use Budry\OpenGraph\Utils\FieldsFilter;
 use Respect\Validation\Validator;
 
 class OpenGraph implements ObjectInterface
@@ -157,7 +158,8 @@ class OpenGraph implements ObjectInterface
         foreach ($this->getAudios() as $audio) {
             $fields = array_merge($fields, $audio->getFields());
         }
+        $fields = array_merge($fields, $this->getType()->getFields());
 
-        return $fields;
+        return FieldsFilter::getFilteredItems($fields);
     }
 }
